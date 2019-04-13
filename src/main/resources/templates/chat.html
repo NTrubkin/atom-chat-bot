@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="chat.js"></script>
+
+</head>
+<body>
+<input id="messageField">
+<button id="sendBtn" onclick="sendMessage()">Send</button>
+<div id="messageBlock"></div>
+</body>
+<script>
+    clearMessages();
+    loadMessages();
+    setInterval(updateMessages, 1000);
+    sendOnEnter();
+</script>
+</html>

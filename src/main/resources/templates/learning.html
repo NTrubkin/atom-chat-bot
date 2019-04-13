@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learning</title>
+
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="learning.js"></script>
+
+</head>
+<body>
+<label for="commandCodeField">Command</label>
+<input id="commandCodeField">
+<label for="messageField">Message</label>
+<input id="messageField">
+<button onclick="learn()">Learn</button>
+<br>
+<br>
+
+<button onclick="recalculateIdf()">Recalculate IDF</button>
+<button onclick="loadCommandTags()">Load Command Tags</button>
+<label id="commandCodeFieldLabel"></label>
+<br>
+<br>
+
+<button onclick="sortTagsByName(); showTags();">Sort by Name</button>
+<button onclick="sortTagsByIdf(); showTags();">Sort by IDF</button>
+<div id="commandCodeTags">
+    <p>Tags</p>
+</div>
+</body>
+</html>
