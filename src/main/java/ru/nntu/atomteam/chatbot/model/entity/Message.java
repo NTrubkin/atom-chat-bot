@@ -14,15 +14,19 @@ public class Message {
 	private long timestamp;
 	@Column
 	private boolean read;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "owner_id", referencedColumnName = "id")
+	private User owner;
 
 	public Message() {
 	}
 
-	public Message(long id, String text, long timestamp, boolean read) {
+	public Message(long id, String text, long timestamp, boolean read, User owner) {
 		this.id = id;
 		this.text = text;
 		this.timestamp = timestamp;
 		this.read = read;
+		this.owner = owner;
 	}
 
 	public long getId() {
@@ -55,5 +59,13 @@ public class Message {
 
 	public void setRead(boolean read) {
 		this.read = read;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 }

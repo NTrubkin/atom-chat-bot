@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
@@ -8,10 +8,12 @@
     <script type="text/javascript" src="registration.js"></script>
 </head>
 <body>
-<label for="loginTextBox">Login</label>
-<input id="loginTextBox">
-<label for="passwordTextBox">Password</label>
-<input id="passwordTextBox">
+<a href="/login">Login Page</a>
+<p>Registration</p>
+<input id="loginTextBox" th:placeholder="Login">
+<br>
+<input id="passwordTextBox" th:placeholder="Password">
+<br>
 <button onclick="register()">Register</button>
 </body>
 </html>

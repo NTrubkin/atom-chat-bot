@@ -2,32 +2,35 @@ DROP TABLE IF EXISTS learning_log;
 DROP TABLE IF EXISTS command_tag;
 DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS command;
-DROP TABLE IF EXISTS chat_user;
 DROP TABLE IF EXISTS message;
-
-create table message
-(
-	id bigserial not null
-		constraint message_pk
-			primary key,
-	text text not null,
-	timestamp bigint not null,
-	read boolean not null
-);
+DROP TABLE IF EXISTS chat_user;
 
 
 create table chat_user
 (
-	id bigserial not null
+	id       bigserial    not null
 		constraint user_pk
 			primary key,
-	login varchar(40) not null,
-	password varchar(40) not null
+	login    varchar(40)  not null,
+	password varchar(120) not null
 );
 
 create unique index chat_user_login_uindex
 	on chat_user (login);
 
+create table message
+(
+	id        bigserial not null
+		constraint message_pk
+			primary key,
+	text      text      not null,
+	timestamp bigint    not null,
+	read      boolean   not null,
+	owner_id  bigint    not null
+		constraint message_owner_id_fk
+			references chat_user
+			on update cascade on delete cascade
+);
 
 create table command
 (

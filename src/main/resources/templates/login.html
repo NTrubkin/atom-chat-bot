@@ -1,17 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
+<head>
+    <title>Login</title>
     <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="login.js"></script>
 </head>
+
 <body>
-<label for="login">Login</label>
-<input id="login">
-<label for="password">Password</label>
-<input id="password">
-<button>Login</button>
+<a href="/registration">Registration Page</a>
+<p>Login</p>
+<div th:if="${param.error}">
+    <p style="color: #FF1C19;">Login or Password invalid, please verify</p>
+</div>
+<div>
+    <form th:action="@{/login}" method="POST">
+        <input type="text" id="email" name="login" th:placeholder="Login"/>
+        <br/>
+        <input type="password" th:placeholder="Password"
+               id="password" name="password"/>
+        <br/>
+        <button name="Submit" value="Login" type="Submit" th:text="Login"></button>
+    </form>
+</div>
 </body>
 </html>

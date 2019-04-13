@@ -11,6 +11,7 @@ public class MessageDtoMapper implements Mapper<MessageDto, Message> {
 		return new Message(0,
 				source.getText(),
 				0,
-				false);
+				false,
+				null);
 	}
 }

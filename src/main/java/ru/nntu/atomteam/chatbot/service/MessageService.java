@@ -22,13 +22,20 @@ public class MessageService {
 	private final Mapper<Message, MessageDto> entityMapper;
 	private final CommandRepository commandRepository;
 	private final BotService botService;
+	private final UserService userService;
 
-	public MessageService(MessageRepository repository, Mapper<MessageDto, Message> dtoMapper, Mapper<Message, MessageDto> entityMapper, CommandRepository commandRepository, SimpleBotService botService) {
+	public MessageService(MessageRepository repository,
+	                      Mapper<MessageDto, Message> dtoMapper,
+	                      Mapper<Message, MessageDto> entityMapper,
+	                      CommandRepository commandRepository,
+	                      SimpleBotService botService,
+	                      UserService userService) {
 		this.repository = repository;
 		this.dtoMapper = dtoMapper;
 		this.entityMapper = entityMapper;
 		this.commandRepository = commandRepository;
 		this.botService = botService;
+		this.userService = userService;
 	}
 
 	public void sendMessage(MessageDto messageDto) {
@@ -44,13 +51,14 @@ public class MessageService {
 
 	private void saveMessage(Message message) {
 		message.setTimestamp(Instant.now().toEpochMilli());
+		message.setOwner(userService.getAuthentiticatedUser());
 		repository.save(message);
 	}
 
 	// todo: add order by time
 	public List<MessageDto> getMessages() {
 		return repository
-				.findAll()
+				.findByOwner(userService.getAuthentiticatedUser())
 				.stream()
 				.peek(message -> message.setRead(true))
 				.map(entityMapper::map)
@@ -59,7 +67,7 @@ public class MessageService {
 
 	public List<MessageDto> getUnreadMessages() {
 		return repository
-				.findByRead(false)
+				.findByReadAndOwner(false, userService.getAuthentiticatedUser())
 				.stream()
 				.peek(message -> message.setRead(true))
 				.map(entityMapper::map)
