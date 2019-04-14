@@ -1,8 +1,12 @@
 package ru.nntu.atomteam.chatbot.service.bot;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import ru.nntu.atomteam.chatbot.model.BotState;
 import ru.nntu.atomteam.chatbot.model.dto.MessageDto;
 import ru.nntu.atomteam.chatbot.model.entity.Command;
 import ru.nntu.atomteam.chatbot.model.entity.Message;
@@ -10,6 +14,8 @@ import ru.nntu.atomteam.chatbot.model.entity.Tag;
 import ru.nntu.atomteam.chatbot.repository.CommandRepository;
 import ru.nntu.atomteam.chatbot.repository.TagRepository;
 import ru.nntu.atomteam.chatbot.service.MessageService;
+import ru.nntu.atomteam.chatbot.service.bot.action.ActionService;
+import ru.nntu.atomteam.chatbot.service.bot.action.TerminalAction;
 
 import java.util.Collections;
 import java.util.Map;
@@ -18,15 +24,25 @@ import java.util.stream.Collectors;
 
 @Service
 public class SimpleBotService implements BotService {
+	private static final Logger LOG = LoggerFactory.getLogger(TerminalAction.class);
+
 	private MessageService messageService;
 	private final YandexStemmerService stemmerService;
 	private final TagRepository tagRepository;
 	private final CommandRepository commandRepository;
+	private final ActionService actionService;
+	private final ApplicationContext context;
 
-	public SimpleBotService(YandexStemmerService stemmerService, TagRepository tagRepository, CommandRepository commandRepository) {
+	public SimpleBotService(YandexStemmerService stemmerService,
+	                        TagRepository tagRepository,
+	                        CommandRepository commandRepository,
+	                        ActionService actionService,
+	                        ApplicationContext context) {
 		this.stemmerService = stemmerService;
 		this.tagRepository = tagRepository;
 		this.commandRepository = commandRepository;
+		this.actionService = actionService;
+		this.context = context;
 	}
 
 	public void reply(Message message) {
@@ -49,7 +65,10 @@ public class SimpleBotService implements BotService {
 			return;
 		}
 
+		context.getBean(BotState.class).setCurrentCommand(selectedPair.getKey());
+		LOG.info(String.format("Current command is %s", context.getBean(BotState.class).getCurrentCommand()));
 		MessageDto reply = new MessageDto(selectedPair.getKey().getReply());
+		actionService.handleReply(reply);
 		messageService.sendMessageFromBot(reply);
 	}
 

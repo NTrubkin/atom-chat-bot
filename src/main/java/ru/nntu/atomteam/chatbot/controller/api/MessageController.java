@@ -1,6 +1,5 @@
 package ru.nntu.atomteam.chatbot.controller.api;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,7 @@ public class MessageController {
 
 	@GetMapping("unread")
 	public List<MessageDto> getUnreadMessages() {
+
 		return service.getUnreadMessages();
 	}
 }

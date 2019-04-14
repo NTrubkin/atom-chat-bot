@@ -34,13 +34,17 @@ create table message
 
 create table command
 (
-	id bigserial not null
+	id                bigserial   not null
 		constraint command_pk
 			primary key,
-	code varchar(24) not null,
-	description varchar(100),
-	user_command boolean not null,
-	reply text not null
+	code              varchar(24) not null,
+	description       varchar(100),
+	user_command      boolean     not null,
+	reply             text        not null,
+	parent_command_id bigint
+		constraint command_parent_command_id_fk
+			references command
+			on update cascade on delete cascade
 );
 
 create unique index command_code_uindex
@@ -84,4 +88,60 @@ create table learning_log
 	date bigint not null
 );
 
+insert into chat_user (id, login, password)
+values (1, 'it', '$2a$10$0Qlf.upVSrL01yfidrqoiuMa8AE9DQmLzMklxfYyIRBfxUWw24JXe');
+insert into chat_user (id, login, password)
+values (2, 'hr', '$2a$10$0Qlf.upVSrL01yfidrqoiuMa8AE9DQmLzMklxfYyIRBfxUWw24JXe');
+insert into chat_user (id, login, password)
+values (3, 'nt', '$2a$10$0Qlf.upVSrL01yfidrqoiuMa8AE9DQmLzMklxfYyIRBfxUWw24JXe');
 
+insert into command (id, code, description, user_command, reply, parent_command_id)
+values (1, 'root', 'root command', true, '', null);
+insert into command (id, code, description, user_command, reply, parent_command_id)
+values (2, 'hi', 'hi command', true, 'Привет.{terminal}', 1);
+insert into command (id, code, description, user_command, reply, parent_command_id)
+values (3, 'help', 'help', true,
+		'Доступны следующие команды: "приветствие", "узнать зарплату", "узнать должность", "узнать стаж", "заявка на оборудование", "заявка на отпуск".{terminal}',
+		1);
+insert into command (id, code, description, user_command, reply, parent_command_id)
+values (4, 'get_pos', 'working position', true, 'Ваша рабочая должность {pos}.{terminal}', 1);
+insert into command (id, code, description, user_command, reply, parent_command_id)
+values (5, 'get_sal', 'salary', true, 'Ваша зарплата {sal} рублей.{terminal}', 1);
+insert into command (id, code, description, user_command, reply, parent_command_id)
+values (6, 'get_exp', 'working experience', true, 'Вы были наняты {hire} числа, текущий стаж {exp} дней.{terminal}', 1);
+insert into command (id, code, description, user_command, reply, parent_command_id)
+values (7, 'it_req', 'it request', true,
+		'Давайте составим заявку в IT-техподдержку. Пожалуйста укажите детали заявки.{terminal}', 1);
+insert into command (id, code, description, user_command, reply, parent_command_id)
+values (8, 'vacation_req', 'hr vacation request', true,
+		'Давайте составим заявку в HR-отдел. Пожалуйста укажите детали заявки.{terminal}', 1);
+
+insert into tag (id, name, idf_value)
+values (1, 'привет', 0);
+insert into tag (id, name, idf_value)
+values (2, 'помощь', 0);
+insert into tag (id, name, idf_value)
+values (3, 'должность', 0);
+insert into tag (id, name, idf_value)
+values (4, 'зарплата', 0);
+insert into tag (id, name, idf_value)
+values (5, 'стаж', 0);
+insert into tag (id, name, idf_value)
+values (6, 'оборудование', 0);
+insert into tag (id, name, idf_value)
+values (7, 'отпуск', 0);
+
+insert into command_tag (command_id, tag_id)
+values (2, 1);
+insert into command_tag (command_id, tag_id)
+values (3, 2);
+insert into command_tag (command_id, tag_id)
+values (4, 3);
+insert into command_tag (command_id, tag_id)
+values (5, 4);
+insert into command_tag (command_id, tag_id)
+values (6, 5);
+insert into command_tag (command_id, tag_id)
+values (7, 6);
+insert into command_tag (command_id, tag_id)
+values (8, 7);

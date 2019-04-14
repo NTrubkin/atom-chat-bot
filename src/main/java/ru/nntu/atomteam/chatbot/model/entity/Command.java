@@ -27,6 +27,10 @@ public class Command {
 			inverseJoinColumns = { @JoinColumn(name = "tag_id") })
 	private Set<Tag> tags = new HashSet<>();
 
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "parent_command_id", referencedColumnName = "id")
+	private Command parentCommand;
+
 	public Command() {
 	}
 
@@ -83,6 +87,14 @@ public class Command {
 
 	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
+	}
+
+	public Command getParentCommand() {
+		return parentCommand;
+	}
+
+	public void setParentCommand(Command parentCommand) {
+		this.parentCommand = parentCommand;
 	}
 
 	@Override
