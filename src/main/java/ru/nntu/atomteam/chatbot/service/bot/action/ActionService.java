@@ -11,7 +11,7 @@ public class ActionService {
 		this.actions = actions;
 	}
 
-	public void handleReply(MessageDto reply) {
+	public void handleReply(String request, MessageDto reply) {
 		var currentPair = actions.entrySet()
 				.stream()
 				.filter(
@@ -19,12 +19,12 @@ public class ActionService {
 				.findFirst();
 		if (currentPair.isPresent()) {
 			try {
-				var replacement = currentPair.get().getValue().run();
+				var replacement = currentPair.get().getValue().run(request);
 				reply.setText(reply.getText().replace(currentPair.get().getKey(), replacement));
-				handleReply(reply);
+				handleReply(request, reply);
 			} catch (Exception e) {
 				reply.setText(currentPair.get().getValue().failMessage());
-				handleReply(reply);
+				handleReply(request, reply);
 			}
 		}
 	}

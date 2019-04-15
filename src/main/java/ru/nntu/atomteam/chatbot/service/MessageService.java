@@ -49,16 +49,27 @@ public class MessageService {
 		saveMessage(message);
 	}
 
+	public void sendMessageFromBot(MessageDto messageDto, String to) {
+		Message message = dtoMapper.map(messageDto);
+		saveMessage(message, to);
+	}
+
 	private void saveMessage(Message message) {
 		message.setTimestamp(Instant.now().toEpochMilli());
 		message.setOwner(userService.getAuthentiticatedUser());
 		repository.save(message);
 	}
 
+	private void saveMessage(Message message, String to) {
+		message.setTimestamp(Instant.now().toEpochMilli());
+		message.setOwner(userService.getUser(to));
+		repository.save(message);
+	}
+
 	// todo: add order by time
 	public List<MessageDto> getMessages() {
 		return repository
-				.findByOwner(userService.getAuthentiticatedUser())
+				.findByOwnerOrderByTimestampAsc(userService.getAuthentiticatedUser())
 				.stream()
 				.peek(message -> message.setRead(true))
 				.map(entityMapper::map)
@@ -67,7 +78,7 @@ public class MessageService {
 
 	public List<MessageDto> getUnreadMessages() {
 		return repository
-				.findByReadAndOwner(false, userService.getAuthentiticatedUser())
+				.findByReadAndOwnerOrderByTimestampAsc(false, userService.getAuthentiticatedUser())
 				.stream()
 				.peek(message -> message.setRead(true))
 				.map(entityMapper::map)

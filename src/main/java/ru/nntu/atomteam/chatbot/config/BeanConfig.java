@@ -28,6 +28,10 @@ public class BeanConfig {
 		actions.put("{hire}", context.getBean(HireAction.class));
 		actions.put("{exp}", context.getBean(ExperienceAction.class));
 		actions.put("{send}", context.getBean(SendAction.class));
+		actions.put("{send}", context.getBean(SendAction.class));
+		actions.put("{back}", context.getBean(BackAction.class));
+		actions.put("{equip}", context.getBean(EquipmentAction.class));
+		actions.put("{it}", context.getBean(ItAction.class));
 		return new ActionService(actions);
 	}
 

@@ -39,9 +39,15 @@ public class UserService implements UserDetailsService {
 		return new UserDetailsDto(user.getId(), user.getLogin(), user.getPassword());
 	}
 
+
 	public User getAuthentiticatedUser() {
 		UserDetailsDto detailsDto = (UserDetailsDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return repository.findById(detailsDto.getId())
 				.orElseThrow(() -> new UsernameNotFoundException(String.format("User \"%s\" not found", detailsDto.getUsername())));
+	}
+
+	public User getUser(String login) throws UsernameNotFoundException {
+		return repository.findByLogin(login)
+				.orElseThrow(() -> new UsernameNotFoundException(String.format("User \"%s\" not found", login)));
 	}
 }

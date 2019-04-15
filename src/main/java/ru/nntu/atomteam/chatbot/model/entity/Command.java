@@ -28,7 +28,7 @@ public class Command {
 	private Set<Tag> tags = new HashSet<>();
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "parent_command_id", referencedColumnName = "id")
+	@JoinColumn(name = "parent_command_id")
 	private Command parentCommand;
 
 	public Command() {

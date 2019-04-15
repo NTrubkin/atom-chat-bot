@@ -47,7 +47,8 @@ public class SimpleBotService implements BotService {
 
 	public void reply(Message message) {
 		var tags = stemmerService.normilize(message.getText());
-		var commandWeights = commandRepository.findAll()
+		var parentCommand = context.getBean(BotState.class).getCurrentCommand();
+		var commandWeights = commandRepository.findAllByParentCommand(parentCommand)
 				.stream()
 				.collect(Collectors.toMap(command -> command, command -> getIdfSum(tags, command)));
 
@@ -65,11 +66,14 @@ public class SimpleBotService implements BotService {
 			return;
 		}
 
+		LOG.info(String.format("Available commands: %s", commandRepository.findAllByParentCommand(context.getBean(BotState.class).getCurrentCommand())));
 		context.getBean(BotState.class).setCurrentCommand(selectedPair.getKey());
 		LOG.info(String.format("Current command is %s", context.getBean(BotState.class).getCurrentCommand()));
 		MessageDto reply = new MessageDto(selectedPair.getKey().getReply());
-		actionService.handleReply(reply);
+		actionService.handleReply(message.getText(), reply);
 		messageService.sendMessageFromBot(reply);
+
+
 	}
 
 	@Autowired

@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.nntu.atomteam.chatbot.model.entity.Command;
 import ru.nntu.atomteam.chatbot.model.entity.Tag;
 import ru.nntu.atomteam.chatbot.repository.CommandRepository;
+import ru.nntu.atomteam.chatbot.service.RosatomResourceClient;
 import ru.nntu.atomteam.chatbot.service.bot.YandexStemmerService;
 import ru.stachek66.nlp.mystem.holding.Factory;
 import ru.stachek66.nlp.mystem.holding.MyStem;
@@ -34,6 +35,9 @@ public class ApplicationTests {
 	private final static MyStem mystemAnalyzer =
 			new Factory("-igd --eng-gr --format json --weight")
 					.newMyStem("3.0", Option.<File>empty()).get();
+
+	@Autowired
+	private RosatomResourceClient client;
 
 	@Autowired
 	private YandexStemmerService yandexStemmerService;
@@ -90,6 +94,6 @@ public class ApplicationTests {
 
 	@Test
 	public void playground() {
-
+		client.getHireDate("nt");
 	}
 }
