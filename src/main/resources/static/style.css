@@ -10,6 +10,11 @@ body {
     width: 100%;
 }
 
+.main_chat_block {
+    max-width: 600px;
+    width: 100%;
+}
+
 .main_block_element {
     display: flex;
     flex-direction: row;
@@ -50,4 +55,21 @@ body {
     text-decoration: none;
     padding: 4px 12px;
     border-radius: 4px;
+}
+
+.chat_control_block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.chat_control {
+    margin: 6px;
+    height: 28px;
+}
+
+.chat_messages {
+    font-size: 14px;
+    margin: 6px;
 }

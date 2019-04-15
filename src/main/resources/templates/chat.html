@@ -1,16 +1,28 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Chat</title>
-
+    <title>Ассистент | Чат</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
     <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="chat.js"></script>
 
 </head>
 <body>
-<input id="messageField">
-<button id="sendBtn" onclick="sendMessage()">Send</button>
-<div id="messageBlock"></div>
+<div class="main_chat_block">
+    <div class="main_block_element">
+        <p>АССИСТЕНТ</p>
+        <img src="rosatom_logo.png" alt="РосАтом" class="logo">
+        <p>РОСАТОМ&nbsp;&nbsp;</p>
+    </div>
+    <p class="main_block_element">Чат&nbsp;|&nbsp;<a class="main_block_element" href="/logout">Выйти</a></p>
+    <div class="chat_control_block">
+        <input id="messageField" class="text_field chat_control" placeholder="Введите сообщение...">
+        <button id="sendBtn" onclick="sendMessage()" class="btn chat_control">Отправить</button>
+    </div>
+    <br>
+    <div id="messageBlock" class="chat_messages"></div>
+</div>
 </body>
 <script>
     clearMessages();
