@@ -101,7 +101,7 @@ insert into command (id, code, description, user_command, reply, parent_command_
 values (2, 'hi', 'hi command', true, 'Привет.{terminal}', 1);
 insert into command (id, code, description, user_command, reply, parent_command_id)
 values (3, 'help', 'help', true,
-        'Доступны следующие команды: "приветствие", "узнать зарплату", "узнать должность", "узнать стаж", "заявка на оборудование".{terminal}',
+        'Доступны следующие команды: "приветствие", "узнать должность", "узнать зарплату", "узнать стаж", "заявка на оборудование".{terminal}',
         1);
 insert into command (id, code, description, user_command, reply, parent_command_id)
 values (4, 'get_pos', 'working position', true, 'Ваша рабочая должность "{pos}".{terminal}', 1);
@@ -117,14 +117,14 @@ insert into command (id, code, description, user_command, reply, parent_command_
 values (8, 'vacation_req', 'hr vacation request', true,
         'Давайте составим заявку в HR-отдел. Пожалуйста укажите детали заявки.{terminal}', 1);
 insert into command (id, code, description, user_command, reply, parent_command_id)
-values (9, 'equip_type', '', true, 'Записан тип оборудования "{equip}".{back}', 7);
+values (9, 'equip_type', '', true, 'Тип оборудования записан.{equip}{back}', 7);
 insert into command (id, code, description, user_command, reply, parent_command_id)
 values (10, 'it_send', '', true, 'Заявка успешно отправлена.{send}{terminal}', 7);
 insert into command (id, code, description, user_command, reply, parent_command_id)
 values (11, 'it_cancel', '', true, 'Заявка в IT-отдел отменена.{terminal}', 7);
 insert into command (id, code, description, user_command, reply, parent_command_id)
 values (12, 'it_help', '', true,
-        'Чтобы отправить заявку в IT-отдел, необходимо указать тип запрашиваемого оборудования и подтвердить отправку сообщения.{back}',
+        'Чтобы отправить заявку в IT-отдел, необходимо указать тип оборудования и подтвердить отправку сообщения.{back}',
         7);
 insert into command (id, code, description, user_command, reply, parent_command_id)
 values (13, 'it_text', '', true, 'Текущая заявка в IT-отдел: {message}', 7);

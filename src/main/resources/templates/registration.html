@@ -2,18 +2,28 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
-
+    <title>Ассистент | Регистрация</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
     <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="registration.js"></script>
 </head>
 <body>
-<a href="/login">Login Page</a>
-<p>Registration</p>
-<input id="loginTextBox" th:placeholder="Login">
-<br>
-<input id="passwordTextBox" th:placeholder="Password">
-<br>
-<button onclick="register()">Register</button>
+<div class="main_block">
+    <div class="main_block_element">
+        <p>АССИСТЕНТ</p>
+        <img src="rosatom_logo.png" alt="РосАтом" class="logo">
+        <p>РОСАТОМ&nbsp;&nbsp;</p>
+    </div>
+    <p class="main_block_element">Регистрация</p>
+    <input id="loginTextBox" th:placeholder="Логин..." class="text_field inline_element">
+    <br>
+    <input id="passwordTextBox" th:placeholder="Пароль..." class="text_field inline_element">
+    <br>
+    <div class="main_block_element login_buttons_block">
+        <button onclick="register()" class="inline_element btn">Зарегистрироваться</button>
+        <a href="/login" class="inline_element">Войти</a>
+    </div>
+</div>
 </body>
 </html>
