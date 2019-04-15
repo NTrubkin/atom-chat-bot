@@ -154,3 +154,10 @@ values (2, 1),
        (11, 10),
        (12, 2),
        (13, 11);
+
+ALTER SEQUENCE chat_user_id_seq RESTART WITH 1000;
+ALTER SEQUENCE command_id_seq RESTART WITH 1000;
+ALTER SEQUENCE command_tag_id_seq RESTART WITH 1000;
+ALTER SEQUENCE learning_log_id_seq RESTART WITH 1000;
+ALTER SEQUENCE message_id_seq RESTART WITH 1000;
+ALTER SEQUENCE tag_id_seq RESTART WITH 1000;
